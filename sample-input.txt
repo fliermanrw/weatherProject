@@ -1,0 +1,21 @@
+
+ <WEATHERDATA>
+        <!-- Het measurement-element bevat de meetgegevens van een weerstation -->
+        <MEASUREMENT>
+            <!-- Het station waarvan deze gegevens zijn -->
+            <STN>123456</STN>
+
+            <!-- Datum van versturen van deze gegevens, formaat: yyyy-mm-dd -->
+            <DATE>2009-09-13</DATE>
+
+            <!-- Tijd van versturen van deze gegevens, formaat: hh:mm:ss -->
+            <TIME>15:59:46</TIME>
+
+            <!-- Zichtbaarheid in kilometers, geldige waardes van 0.0 t/m 999.9 met 1 decimaal -->
+            <VISIB>123.7</VISIB>
+
+            <!-- Bewolking in procenten, geldige waardes van 0.0 t/m 99.9 met 1 decimaal -->
+            <CLDC>87.4</CLDC>
+       </MEASUREMENT>
+ </WEATHERDATA>
+
