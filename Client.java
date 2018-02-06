@@ -10,20 +10,20 @@ public class Client implements Runnable {
     private Socket clientSocket;
     private int clientID;
     private ArrayList<String> allStations;
-    private OutputWriter outputWriter;
+    private writeJSON writeJSON;
 
 
-    public Client(Socket clientSocket, int clientID, ArrayList<String> allStations, OutputWriter outputWriter){
+    public Client(Socket clientSocket, int clientID, ArrayList<String> allStations, writeJSON writeJSON){
         this.clientID = clientID;
         this.clientSocket = clientSocket;
         this.allStations = allStations;
-        this.outputWriter = outputWriter;
+        this.writeJSON = writeJSON;
     }
 
     @Override
     public void run(){
         try {
-            XMLFilter xmlFilter = new XMLFilter(allStations, outputWriter);
+            XMLFilter xmlFilter = new XMLFilter(allStations, writeJSON);
 
             //capture stream and parse it
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));

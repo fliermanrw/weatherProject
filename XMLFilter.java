@@ -19,8 +19,8 @@ public class XMLFilter extends DefaultHandler {
 
 
     private XMLReader xmlReader;
-    private OutputWriter outputWriter;
-    private writeJSON writeJSON = new writeJSON();
+    //private OutputWriter outputWriter;
+    private writeJSON writeJSON;
 
 
     // vars for station information
@@ -32,12 +32,12 @@ public class XMLFilter extends DefaultHandler {
 
     // constructor of the XMLFilter
     // Will be a writeJSON instead of outputWriter, I guess
-    public XMLFilter(ArrayList<String> allStations, OutputWriter outputWriter){
+    public XMLFilter(ArrayList<String> allStations, writeJSON writeJSON){
         super();
         try {
             //inherit from Client class (so no more extra classes started/resources used when new thread starts)
             this.allStations = allStations;
-            this.outputWriter = outputWriter;
+            this.writeJSON = writeJSON;
 
             xmlReader = XMLReaderFactory.createXMLReader();
         } catch (SAXException e) {
@@ -116,7 +116,7 @@ public class XMLFilter extends DefaultHandler {
         if(qName.equals("MEASUREMENT") && validStn){
             //outputWriter.writeOut(stnNmbr, date, time, visibNmbr);
             //outputWriter.writeOutPerCountry("Netherlands",stnNmbr,date,time,visibNmbr);
-            writeJSON.writeJSON(stnNmbr, date, time, visibNmbr);
+            writeJSON.writeToJSON(stnNmbr, date, time, visibNmbr);
 
             // validStn op false -- klaar voor nieuw checkStn
             validStn = false;
@@ -159,8 +159,10 @@ public class XMLFilter extends DefaultHandler {
     private void checkStn(String stn){
         if(allStations.contains(stn)){
             validStn = true;
-            System.out.println("TRUE");
+            //System.out.println("TRUE");
+
         }
     }
+
 
 }

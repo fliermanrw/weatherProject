@@ -21,7 +21,7 @@ public class Server implements Runnable{
 
            // initiate all stations and pass it to the XMLFilter
            ArrayList<String> allStations = stations.getAllStations();
-           OutputWriter outputWriter = new OutputWriter();
+           writeJSON writeJSON = new writeJSON();
 
 
            // Listen for new connection
@@ -29,7 +29,7 @@ public class Server implements Runnable{
                socket = serverSocket.accept();
                liveConnections++;
 
-               Client client = new Client(socket, liveConnections, allStations, outputWriter);
+               Client client = new Client(socket, liveConnections, allStations, writeJSON);
                Thread thread = new Thread(client);
                thread.start();
            }
