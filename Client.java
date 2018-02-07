@@ -13,8 +13,7 @@ public class Client implements Runnable {
     private writeJSON writeJSON;
 
 
-    public Client(Socket clientSocket, int clientID, ArrayList<String> allStations, writeJSON writeJSON){
-        this.clientID = clientID;
+    public Client(Socket clientSocket, ArrayList<String> allStations, writeJSON writeJSON){
         this.clientSocket = clientSocket;
         this.allStations = allStations;
         this.writeJSON = writeJSON;
@@ -23,18 +22,16 @@ public class Client implements Runnable {
     @Override
     public void run(){
         try {
-            XMLFilter xmlFilter = new XMLFilter(allStations, writeJSON);
-
             //capture stream and parse it
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            XMLFilter xmlFilter = new XMLFilter(allStations, writeJSON);
 
-            while ((in.readLine() != null)) {
+            while ((in.readLine()) != null) {
+                //xmlFilter.parseData(in);
                 xmlFilter.parseData(in);
             }
-            System.out.println("ehm niks!");
+
         }
-
-
         catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,10 +1,13 @@
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server implements Runnable{
     private static final int listenPort = 7789;
-    private static final int maxConnections = 900;
+    private static final int maxConnections = 9000;
     private static int liveConnections = 0;
     private Socket socket;
 
@@ -25,15 +28,17 @@ public class Server implements Runnable{
 
 
            // Listen for new connection
-           while(liveConnections < maxConnections){
+           while(true){
                socket = serverSocket.accept();
-               liveConnections++;
+               //liveConnections++;
+               Client client = new Client(socket, allStations, writeJSON);
+               ExecutorService executorService = Executors.newFixedThreadPool(800);
 
-               Client client = new Client(socket, liveConnections, allStations, writeJSON);
-               Thread thread = new Thread(client);
-               thread.start();
+               executorService.execute(client);
+
+               /*Thread thread = new Thread(client);
+               thread.start();*/
            }
-
 
 
        } catch (IOException e) {

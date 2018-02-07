@@ -4,5 +4,4 @@ public class Main {
         new Server();
         System.out.println("Im ready to rummmmmmble!");
     }
-
 }

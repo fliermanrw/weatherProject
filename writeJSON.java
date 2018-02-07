@@ -14,20 +14,32 @@ public class writeJSON {
     // om alles netjes in mappen te kunnen doen?
     JSONObject stationsPerCountry = stationsclass.getCountryStations();
 
-    int counter = 0;
-    boolean timeToWriteHistory = false;
+    private int counter = 0;
+    private boolean timeToWriteHistory = false;
 
 
-    public void writeToJSON(String stn, String date, String time, String visib){
+    public void writeToJSON(String stn, String date, String time, String visib, String cldc, String prpc){
         JSONObject station = new JSONObject();
         JSONObject stationData = new JSONObject();
 
         try {
-            stationData.put("Date: ", date);
-            stationData.put("Time: ", time);
-            stationData.put("Visibility: ", visib);
+            stationData.put("Date", date);
+            stationData.put("Time", time);
+            stationData.put("Visibility", visib);
+            stationData.put("Cldc" , cldc);
+            stationData.put("Prcp", prpc);
 
             station.put(stn,stationData);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        saveJSON(station, stn);
+    }
+
+    public void jsonTest(JSONObject stationData, String stn){
+        JSONObject station = new JSONObject();
+        try {
+            station.put(stn, stationData);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -63,9 +75,10 @@ public class writeJSON {
         }
     }
 
+    // increase or decrease counter either to increase/decrease the history writing speed
     private boolean checkAppend(){
         counter++;
-        return counter == 3;
+        return counter == 29;
     }
 
     private void appendHistory(JSONObject station, String stn){
@@ -84,9 +97,5 @@ public class writeJSON {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private String reWriteColon(String time){
-        return time.replace(":","-");
     }
 }
