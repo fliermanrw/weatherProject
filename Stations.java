@@ -1,6 +1,4 @@
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -8,27 +6,20 @@ import java.util.Scanner;
 
 public class Stations {
 
-    JSONObject countryStations = new JSONObject();
-    ArrayList<String> allStations = new ArrayList<>();
+    private JSONObject countryStations = new JSONObject();
+    private ArrayList<String> allStations = new ArrayList<>();
 
     // constructor
     public Stations(){
         readAllStations();
     }
 
-    // first reads all countrynames and then creates array with all stations in EU
+    // first reads all countrynames and then creates array with all stations in EUU
     private void readAllStations(){
         ArrayList<String> allStations = getCountryList();
 
         for(String station: allStations){
             getCountryStation(station);
-
-            // insert JSON object country so the stations can be linked to the countryname later on
-            try {
-                countryStations.put(station,getCountryStationJSON(station));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -38,9 +29,10 @@ public class Stations {
         Scanner in = null;
 
         try {
-            in = new Scanner(new FileReader("C:\\Users\\Ryan\\IdeaProjects\\ProjectWeatherData\\src\\countries\\CountryList.txt"));
+            //in = new Scanner(new FileReader("C:\\Users\\Ryan\\IdeaProjects\\ProjectWeatherData\\src\\countries\\CountryList.txt"));
+            in = new Scanner(new FileReader("/bin/applicatie/countries/CountryList.txt"));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         while(in.hasNextLine()) {
@@ -57,7 +49,8 @@ public class Stations {
         Scanner in = null;
 
         try {
-            in = new Scanner(new FileReader("C:\\Users\\Ryan\\IdeaProjects\\ProjectWeatherData\\src\\countries\\" + countryName + ".txt"));
+            //in = new Scanner(new FileReader("C:\\Users\\Ryan\\IdeaProjects\\ProjectWeatherData\\src\\countries\\" + countryName + ".txt"));
+            in = new Scanner(new FileReader("/bin/applicatie/countries/" + countryName + ".txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -70,26 +63,30 @@ public class Stations {
         in.close();
     }
 
-    private JSONArray getCountryStationJSON(String countryName){
-        JSONArray jsonArray = new JSONArray();
+    // gets all stations from txt file per String country
+    public ArrayList<String> getTunisiaList(){
+        ArrayList<String> stations = new ArrayList<>();
         Scanner in = null;
 
         try {
-            in = new Scanner(new FileReader("C:\\Users\\Ryan\\IdeaProjects\\ProjectWeatherData\\src\\countries\\" + countryName + ".txt"));
+            //in = new Scanner(new FileReader("C:\\Users\\Ryan\\IdeaProjects\\ProjectWeatherData\\src\\countries\\Tunisia.txt"));
+            in = new Scanner(new FileReader("/bin/applicatie/countries/Tunisia.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
         while(in.hasNextLine()) {
             String line = in.nextLine();
-            jsonArray.put(line);
+            stations.add(line);
         }
 
-        return jsonArray;
+        in.close();
+
+        return stations;
     }
 
     // public function to get the allStations arraylist
-    public ArrayList<String> getAllStations(){
+    public ArrayList<String> getEUStations(){
         if(allStations.isEmpty()){
             readAllStations();
         }
